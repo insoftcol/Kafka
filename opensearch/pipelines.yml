@@ -1,0 +1,24 @@
+kafka-to-opensearch-pipeline:
+  source:
+    kafka:
+      encryption:
+        type: "none"
+      bootstrap_servers: 
+        - kafka:9092
+      topics:
+        - name: "kafkalogs"
+          group_id: "dataprepper-logskafka"
+  processor:
+    - parse_json:
+        source: "message"
+  sink:
+    - opensearch:
+        hosts: ["https://opensearch-node1:9200", "https://opensearch-node2:9200"]
+        username: "admin"
+        password: "In50ftcol2025#"
+        index: "kafka-credito-2025-v2"
+        cert: "/usr/share/data-prepper/config/root-ca.pem"
+        insecure: true
+        connect_timeout: 5000  # Timeout de conexión en ms
+        socket_timeout: 5000   # Timeout de operaciones
+        max_retries: 5         # Número máximo de reintentos
