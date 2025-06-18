@@ -1,1 +1,4 @@
-docker
+ajustar las rutas segun la configurcion local (volumes) del docker compose, para que coincida con la instalacion realizada.
+  volumes:
+      - ./pipelines.yml:/usr/share/data-prepper/pipelines/pipelines.yml
+      - ./root-ca.pem:/usr/share/data-prepper/config/root-ca.pem:ro
