@@ -1,0 +1,45 @@
+package com.company.eventlog.api;
+
+import com.company.eventlog.application.service.EventLogService;
+import com.company.eventlog.application.dto.EventLogRequest;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+public class EventLogControllerTest {
+
+    @InjectMocks
+    private EventLogController eventLogController;
+
+    @Mock
+    private EventLogService eventLogService;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void testRegisterEventLog() {
+        EventLogRequest request = new EventLogRequest();
+        request.setEventType("SUCCESS");
+        request.setTimestamp(System.currentTimeMillis());
+        request.setStatus("COMPLETED");
+
+        when(eventLogService.registerEventLog(any(EventLogRequest.class))).thenReturn(true);
+
+        ResponseEntity<String> response = eventLogController.registerEventLog(request);
+
+        verify(eventLogService).registerEventLog(request);
+        assert response.getStatusCode() == HttpStatus.CREATED;
+        assert response.getBody().equals("Event log registered successfully");
+    }
+}

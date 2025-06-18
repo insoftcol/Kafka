@@ -1,0 +1,35 @@
+package com.company.eventlog.application;
+
+import com.company.eventlog.application.dto.EventLogRequest;
+import com.company.eventlog.domain.port.in.RegisterEventLogUseCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import static org.mockito.Mockito.verify;
+
+class EventLogServiceTest {
+
+    @Mock
+    private RegisterEventLogUseCase registerEventLogUseCase;
+
+    @InjectMocks
+    private EventLogService eventLogService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void testRegisterEventLog() {
+        EventLogRequest request = new EventLogRequest();
+        // Set properties of request as needed
+
+        eventLogService.registerEventLog(request);
+
+        verify(registerEventLogUseCase).registerEventLog(request);
+    }
+}

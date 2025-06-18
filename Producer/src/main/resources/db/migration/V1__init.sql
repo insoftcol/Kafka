@@ -1,0 +1,7 @@
+CREATE TABLE event_log (
+    id SERIAL PRIMARY KEY,
+    event_type VARCHAR(50) NOT NULL,
+    timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(50) NOT NULL,
+    payload JSONB NOT NULL
+);
